@@ -133,5 +133,27 @@ router.post("/update/:id", upload.single("coverImage"), async (req, res) => {
 });
 
 
+router.post("/delete/:id", async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+
+    if (!blog) {
+      return res.status(404).send("Blog not found");
+    }
+
+    if (blog.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).send("Unauthorized to delete this blog");
+    }
+
+    await blog.deleteOne();
+
+    return res.render('home')
+  } catch (error) {
+    console.error("Error deleting blog:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
+
 
 module.exports = router;
