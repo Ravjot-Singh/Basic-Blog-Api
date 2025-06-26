@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Edit Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-4">
+      <h1>Edit Blog</h1>
+      <form action="/blog/update/<%= blog._id %>" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            value="<%= blog.title %>"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="body" class="form-label">Body</label>
+          <textarea
+            class="form-control"
+            id="body"
+            name="body"
+            rows="10"
+            required
+          ><%= blog.body %></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="coverImage" class="form-label">Update Cover Image (optional)</label>
+          <input class="form-control" type="file" name="coverImage" id="coverImage" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Blog</button>
+        <a href="/blog/<%= blog._id %>" class="btn btn-secondary">Cancel</a>
+      </form>
+    </div>
+
+    <%- include('./partials/scripts') %>
+  </body>
+</html>
